@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - TicketBazaar</title>
+    <!-- Font Awesome for icons -->
+   
+    <style>
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        
+        body {
+    background-color: #000000ff; /* Dark background */
+
+      
+}
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #222;
+            color: #d1a054;
+            padding: 15px 0;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            color: #e50914;
+            margin-right: 5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: #d1a054;
+            text-decoration: none;
+        }
+        
+        .nav-links a:hover {
+            color: #f0c060;
+        }
+        
+        .nav-links .active {
+            color: #e50914;
+        }
+        
+        .user-actions a {
+            color: white;
+            margin-left: 15px;
+            text-decoration: none;
+        }
+        
+        /* Contact Form Styles */
+        .contact-container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .contact-container h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #222;
+        }
+        
+        .contact-container p {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #b2070f;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin: 15px 0;
+            }
+            
+            .contact-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <!-- Logo -->
+                <a href="index.html" class="logo">
+                    <i class="fas fa-play"></i>
+                    TicketBazaar
+                </a>
+                
+                <!-- Navigation links -->
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    
+                    <li><a href="contact_us.html" class="active">Contact</a></li>
+                    <li><a href="sign_in.html">Sign in/Sign up</a></li>
+                </ul>
+                
+                <!-- User actions -->
+                <div class="user-actions">
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    <a href="signin.html"><i class="fas fa-user-circle"></i></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contact Form Section -->
+    <div class="container">
+        <div class="contact-container">
+            <h1>Contact Us</h1>
+            <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            
+            <form>
+                <!-- Name field -->
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <!-- Email field -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <!-- Subject field -->
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                
+                <!-- Message field -->
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                
+                <!-- Submit button -->
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

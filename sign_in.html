@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TicketBazaar - Sign In / Sign Up</title>
+   
+    
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000000;
+            color: #d1a054;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #e50914;
+            color: white;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #b8070f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(10, 10, 10, 0.9);
+            color: #d1a054;
+            border-bottom: 1px solid #3a2a1f;
+            padding: 15px 0;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #e50914;
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            color: #d1a054;
+        }
+
+        .nav-links a:hover {
+            color: #f0c060;
+        }
+        
+        .nav-links .active {
+            color: #e50914;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-actions a {
+            margin-left: 20px;
+            font-size: 1.2rem;
+        }
+        
+        /* Auth Section Styles */
+        .auth-section {
+            min-height: calc(100vh - 160px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+        }
+        
+        .auth-container {
+            background-color: rgba(20, 20, 20, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            border: 1px solid #3a2a1f;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #3a2a1f;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            color: #e50914;
+            border-bottom: 2px solid #e50914;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #141414;
+            border: 1px solid #3a2a1f;
+            border-radius: 4px;
+            color: #d1a054;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #e50914;
+            outline: none;
+        }
+        
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .auth-btn:hover {
+            background-color: #b8070f;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .form-footer a {
+            color: #e50914;
+            transition: color 0.3s;
+        }
+        
+        .form-footer a:hover {
+            color: #f0c060;
+        }
+        
+        /* Admin Access Button */
+        .admin-access {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .admin-toggle-btn {
+            background: transparent;
+            border: 1px solid #333;
+            color: #888;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .admin-toggle-btn:hover {
+            border-color: #e50914;
+            color: #e50914;
+        }
+        
+        /* Admin Panel Styles */
+        .admin-panel {
+            background-color: rgba(20, 20, 20, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            border: 1px solid #e50914;
+            margin: 40px auto;
+            display: none;
+        }
+        
+        .admin-panel h2 {
+            color: #e50914;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .admin-login {
+            background-color: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+        }
+        
+        .admin-login h3 {
+            color: #e50914;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .admin-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .admin-btn {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .admin-btn:hover {
+            background-color: #e50914;
+        }
+        
+        .admin-btn.logout {
+            background-color: #ff4444;
+        }
+        
+        .admin-btn.logout:hover {
+            background-color: #cc0000;
+        }
+        
+        .data-display {
+            background-color: #141414;
+            border: 1px solid #3a2a1f;
+            border-radius: 4px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .user-item {
+            background-color: #1a1a1a;
+            border: 1px solid #3a2a1f;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .user-item h4 {
+            color: #e50914;
+            margin-bottom: 8px;
+        }
+        
+        .user-item p {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e50914;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #141414;
+            color: #aaa;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #e50914;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #e50914;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .auth-container {
+                padding: 30px 20px;
+            }
+            
+            .admin-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <!-- Logo -->
+                <a href="index.html" class="logo">
+                    <i class="fas fa-ticket-alt"></i>
+                    TicketBazaar
+                </a>
+                
+                <!-- Navigation links -->
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="contact_us.html">Contact</a></li>
+                    <li><a href="sign_in.html" class="active">Sign in/Sign up</a></li>
+                </ul>
+                
+                <!-- User actions -->
+                <div class="user-actions">
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    <a href="sign_in.html"><i class="fas fa-user-circle"></i></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Auth Section -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <!-- Tabs for Sign In / Sign Up -->
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="signin-tab">Sign In</div>
+                <div class="auth-tab" id="signup-tab">Sign Up</div>
+            </div>
+            
+            <!-- Sign In Form -->
+            <form id="signin-form" class="auth-form active">
+                <div class="form-group">
+                    <label for="signin-email">Email</label>
+                    <input type="email" id="signin-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" required>
+                </div>
+                <button type="submit" class="auth-btn">Sign In</button>
+                <div class="form-footer">
+                    <a href="#">Forgot your password?</a>
+                </div>
+            </form>
+            
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="auth-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" required>
+                </div>
+                <button type="submit" class="auth-btn">Sign Up</button>
+                <div class="form-footer">
+                    By signing up, you agree to our <a href="#">Terms of Service</a>
+                </div>
+            </form>
+            
+            <!-- Admin Access Button -->
+            <div class="admin-access">
+                <button class="admin-toggle-btn" id="admin-toggle">
+                    <i class="fas fa-lock"></i> Admin Access
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Panel -->
+    <section class="admin-panel" id="admin-panel">
+        <h2><i class="fas fa-user-shield"></i> Admin Panel - User Management</h2>
+        
+        <!-- Admin Login Form -->
+        <div class="admin-login" id="admin-login">
+            <h3>Admin Authentication Required</h3>
+            <div class="form-group">
+                <label for="admin-username">Username</label>
+                <input type="text" id="admin-username" placeholder="Enter admin username">
+            </div>
+            <div class="form-group">
+                <label for="admin-password">Password</label>
+                <input type="password" id="admin-password" placeholder="Enter admin password">
+            </div>
+            <button class="auth-btn" id="admin-login-btn">Login as Admin</button>
+            <p style="text-align: center; margin-top: 15px; color: #888; font-size: 12px;">
+                Default credentials: admin / admin123
+            </p>
+        </div>
+        
+        <!-- Admin Controls (Visible after login) -->
+        <div id="admin-controls" style="display: none;">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-users">0</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="active-users">0</div>
+                    <div class="stat-label">Active Today</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="new-users">0</div>
+                    <div class="stat-label">New This Week</div>
+                </div>
+            </div>
+            
+            <div class="admin-controls">
+                <button class="admin-btn" id="show-users-btn">
+                    <i class="fas fa-users"></i> Show All Users
+                </button>
+                <button class="admin-btn" id="show-current-user-btn">
+                    <i class="fas fa-user"></i> Show Current User
+                </button>
+                <button class="admin-btn" id="clear-data-btn">
+                    <i class="fas fa-trash"></i> Clear All Data
+                </button>
+                <button class="admin-btn" id="export-data-btn">
+                    <i class="fas fa-download"></i> Export Data
+                </button>
+                <button class="admin-btn logout" id="admin-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+            
+            <div class="data-display" id="data-display">
+                <p style="text-align: center; color: #888;">Select an option to view data</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Company Info -->
+                <div class="footer-column">
+                    <h3>TicketBazaar</h3>
+                    <p>Your premier destination for movie tickets and cinema experiences. Book easily and enjoy the magic of movies.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="movies.html">Movies</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div class="footer-column">
+                    <h3>Movie Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Comedy</a></li>
+                        <li><a href="#">Drama</a></li>
+                        <li><a href="#">Horror</a></li>
+                        <li><a href="#">Sci-Fi</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Cinema Street, Movie City</li>
+                        <li><i class="fas fa-phone"></i> +1 234 567 8900</li>
+                        <li><i class="fas fa-envelope"></i> info@ticketbazaar.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 TicketBazaar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle between Sign In and Sign Up forms
+        const signinTab = document.getElementById('signin-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const signinForm = document.getElementById('signin-form');
+        const signupForm = document.getElementById('signup-form');
+
+        // Sign In tab click handler
+        signinTab.addEventListener('click', () => {
+            signinTab.classList.add('active');
+            signupTab.classList.remove('active');
+            signinForm.classList.add('active');
+            signupForm.classList.remove('active');
+        });
+
+        // Sign Up tab click handler
+        signupTab.addEventListener('click', () => {
+            signupTab.classList.add('active');
+            signinTab.classList.remove('active');
+            signupForm.classList.add('active');
+            signinForm.classList.remove('active');
+        });
+
+        // Admin credentials
+        const ADMIN_CREDENTIALS = {
+            username: 'admin',
+            password: 'admin123'
+        };
+
+        // Check if user is admin
+        function isAdminLoggedIn() {
+            return localStorage.getItem('adminLoggedIn') === 'true';
+        }
+
+        // Admin login function
+        function adminLogin(username, password) {
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                return true;
+            }
+            return false;
+        }
+
+        // Admin logout function
+        function adminLogout() {
+            localStorage.removeItem('adminLoggedIn');
+        }
+
+        // Toggle admin panel visibility
+        document.getElementById('admin-toggle').addEventListener('click', function() {
+            const adminPanel = document.getElementById('admin-panel');
+            
+            if (adminPanel.style.display === 'block') {
+                adminPanel.style.display = 'none';
+            } else {
+                adminPanel.style.display = 'block';
+                
+                // If already logged in as admin, show controls directly
+                if (isAdminLoggedIn()) {
+                    document.getElementById('admin-login').style.display = 'none';
+                    document.getElementById('admin-controls').style.display = 'block';
+                    updateAdminStats();
+                } else {
+                    document.getElementById('admin-login').style.display = 'block';
+                    document.getElementById('admin-controls').style.display = 'none';
+                }
+            }
+        });
+
+        // Admin login handler
+        document.getElementById('admin-login-btn').addEventListener('click', function() {
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            
+            if (adminLogin(username, password)) {
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-controls').style.display = 'block';
+                updateAdminStats();
+                alert('Admin login successful!');
+            } else {
+                alert('Invalid admin credentials!');
+            }
+        });
+
+        // Admin logout handler
+        document.getElementById('admin-logout-btn').addEventListener('click', function() {
+            adminLogout();
+            document.getElementById('admin-login').style.display = 'block';
+            document.getElementById('admin-controls').style.display = 'none';
+            document.getElementById('admin-username').value = '';
+            document.getElementById('admin-password').value = '';
+            alert('Admin logged out successfully!');
+        });
+
+        // localStorage में users array को initialize करें
+        function initializeUsers() {
+            if (!localStorage.getItem('users')) {
+                localStorage.setItem('users', JSON.stringify([]));
+            }
+        }
+
+        // नया user register करें
+        function registerUser(name, email, password) {
+            const users = JSON.parse(localStorage.getItem('users'));
+            
+            // Check if user already exists
+            const existingUser = users.find(user => user.email === email);
+            if (existingUser) {
+                return { success: false, message: 'User with this email already exists' };
+            }
+            
+            // Add new user
+            const newUser = {
+                id: Date.now(), // Simple ID generation
+                name,
+                email,
+                password, // Note: In a real app, you should hash passwords!
+                createdAt: new Date().toISOString(),
+                lastLogin: null
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            return { success: true, message: 'User registered successfully' };
+        }
+
+        // User login करें
+        function loginUser(email, password) {
+            const users = JSON.parse(localStorage.getItem('users'));
+            
+            // Find user by email and password
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Update last login
+                user.lastLogin = new Date().toISOString();
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Store current user session
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                return { success: true, user };
+            } else {
+                return { success: false, message: 'Invalid email or password' };
+            }
+        }
+
+        // Update admin statistics
+        function updateAdminStats() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const today = new Date().toDateString();
+            const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+            
+            const totalUsers = users.length;
+            const activeToday = users.filter(user => {
+                if (!user.lastLogin) return false;
+                return new Date(user.lastLogin).toDateString() === today;
+            }).length;
+            
+            const newThisWeek = users.filter(user => {
+                return new Date(user.createdAt) >= oneWeekAgo;
+            }).length;
+            
+            document.getElementById('total-users').textContent = totalUsers;
+            document.getElementById('active-users').textContent = activeToday;
+            document.getElementById('new-users').textContent = newThisWeek;
+        }
+
+        // Form submission handlers
+        document.getElementById('signin-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+            
+            // Login user
+            const result = loginUser(email, password);
+            
+            if (result.success) {
+                alert('Login successful!');
+                // Redirect to home page
+                window.location.href = 'index.html';
+            } else {
+                alert('Error: ' + result.message);
+            }
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            
+            // Basic validation
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Register user
+            const result = registerUser(name, email, password);
+            
+            if (result.success) {
+                alert('Registration successful! Please sign in.');
+                // Switch to sign in tab
+                signinTab.click();
+                // Clear form
+                document.getElementById('signup-form').reset();
+            } else {
+                alert('Error: ' + result.message);
+            }
+        });
+
+        // Admin Panel Functions
+        document.getElementById('show-users-btn').addEventListener('click', function() {
+            if (!isAdminLoggedIn()) {
+                alert('Please login as admin first!');
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const dataDisplay = document.getElementById('data-display');
+            
+            if (users.length === 0) {
+                dataDisplay.innerHTML = '<p style="text-align: center; color: #888;">No users registered yet</p>';
+                return;
+            }
+            
+            let html = '<h3 style="color: #e50914; margin-bottom: 15px;">Registered Users (' + users.length + ')</h3>';
+            
+            users.forEach(user => {
+                const lastLogin = user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'Never';
+                html += `
+                    <div class="user-item">
+                        <h4>${user.name}</h4>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>ID:</strong> ${user.id}</p>
+                        <p><strong>Registered:</strong> ${new Date(user.createdAt).toLocaleString()}</p>
+                        <p><strong>Last Login:</strong> ${lastLogin}</p>
+                        <p><strong>Password:</strong> ${user.password} <small style="color: #888;">(plain text - for demo only)</small></p>
+                    </div>
+                `;
+            });
+            
+            dataDisplay.innerHTML = html;
+        });
+
+        document.getElementById('show-current-user-btn').addEventListener('click', function() {
+            if (!isAdminLoggedIn()) {
+                alert('Please login as admin first!');
+                return;
+            }
+            
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            const dataDisplay = document.getElementById('data-display');
+            
+            if (!currentUser) {
+                dataDisplay.innerHTML = '<p style="text-align: center; color: #888;">No user is currently logged in</p>';
+                return;
+            }
+            
+            const lastLogin = currentUser.lastLogin ? new Date(currentUser.lastLogin).toLocaleString() : 'Never';
+            const html = `
+                <h3 style="color: #e50914; margin-bottom: 15px;">Currently Logged In User</h3>
+                <div class="user-item">
+                    <h4>${currentUser.name}</h4>
+                    <p><strong>Email:</strong> ${currentUser.email}</p>
+                    <p><strong>ID:</strong> ${currentUser.id}</p>
+                    <p><strong>Registered:</strong> ${new Date(currentUser.createdAt).toLocaleString()}</p>
+                    <p><strong>Last Login:</strong> ${lastLogin}</p>
+                    <p><strong>Password:</strong> ${currentUser.password} <small style="color: #888;">(plain text - for demo only)</small></p>
+                </div>
+            `;
+            
+            dataDisplay.innerHTML = html;
+        });
+
+        document.getElementById('clear-data-btn').addEventListener('click', function() {
+            if (!isAdminLoggedIn()) {
+                alert('Please login as admin first!');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to clear ALL stored data? This cannot be undone.')) {
+                localStorage.removeItem('users');
+                localStorage.removeItem('currentUser');
+                initializeUsers();
+                document.getElementById('data-display').innerHTML = '<p style="text-align: center; color: #888;">All data has been cleared</p>';
+                updateAdminStats();
+                alert('All data cleared successfully!');
+            }
+        });
+
+        document.getElementById('export-data-btn').addEventListener('click', function() {
+            if (!isAdminLoggedIn()) {
+                alert('Please login as admin first!');
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            
+            const data = {
+                exportedAt: new Date().toISOString(),
+                exportedBy: 'Admin',
+                users: users,
+                currentUser: currentUser
+            };
+            
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'ticketbazaar_users_data.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // Initialize users when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeUsers();
+            
+            // Check if user is already logged in
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                console.log('User is logged in:', JSON.parse(currentUser));
+            }
+        });
+    </script>
+</body>
+</html>
